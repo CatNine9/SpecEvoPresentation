@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bisbwia0lo1m6"]
+
+[ext_resource type="Script" path="res://Maps/Map100k.gd" id="1_l45mq"]
+
+[node name="Map100k" type="Node"]
+script = ExtResource("1_l45mq")

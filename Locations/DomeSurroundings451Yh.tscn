@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4146raruxdsj"]
+
+[ext_resource type="Script" path="res://Locations/DomeSurroundings451Yh.gd" id="1_1bff2"]
+
+[node name="DomeSurroundings451Yh" type="Node"]
+script = ExtResource("1_1bff2")
+
+[node name="LocationShapePolygon" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1160, 413, 1220, 463, 1300, 483, 1380, 483, 1460, 463, 1530, 403, 1500, 333, 1560, 323, 1660, 333, 1710, 393, 1720, 473, 1670, 543, 1390, 613, 1040, 583, 920, 483, 940, 343, 1060, 293, 1190, 323)
+
+[node name="Cats1" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1670, 803, 1680, 793, 1700, 793, 1720, 793, 1720, 773, 1720, 753, 1780, 743, 1800, 763, 1790, 773, 1780, 773, 1770, 783, 1750, 783, 1740, 793, 1750, 803, 1760, 813, 1750, 823, 1730, 823, 1720, 833, 1690, 833)
+
+[node name="Sparrows1" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1560, 93, 1630, 103, 1690, 193, 1750, 263, 1860, 383, 1840, 413, 1790, 403, 1720, 333, 1670, 343, 1640, 313, 1670, 253, 1580, 153)

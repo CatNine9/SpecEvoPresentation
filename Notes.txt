@@ -1,0 +1,78 @@
+An interactive presentation of a speculative evolution project.
+
+
+Story:
+	A good starting place for new users who aren't sure what to do. This should not only describe happenings chronologically in a story fashion, but also act as a tutorial of sorts to introduce the other exploratory sections.
+		* Maybe a soft form of game-ifying it would be to make it like a where's waldo sort of game. The user has to discover certain things (often small details on large images or maps) in order to unlock later points in time or unlock deeper information.
+		If such a thing were to be in the game, there would need to be a free-form mode, where users are not restricted by locks, for the users who would not enjoy the game aspectes.
+
+Map:
+	The interactive map will have clickable zones or areas of interest. When clicked on, information is presented in various different ways.
+		* Time: Users will be able to click through specific points in time to travel through time on the map. This will only be possible for points in time for which there is a map made.
+		* Ecosystems/zones are whole areas of the map that can be clicked on. When selected, users can view various stats about the ecology and geology of that area.
+		* Areas of interest/uniquelocations are locations that have something unique or distinct about them that is worth describing.
+	Map Looping:
+		The map is supposed to loop horizontally. This could be achieved by making decoy extended continuations of the map on either side (could just use a couple of sprite 2ds, so two whole extra maps, it's quick and dirty but works). When the player moves out of the normal bounds of the map (as if it were not extended) they are teleported to a corresponding position at the beginning. The map etensions basically hide this and completes the illusion.
+
+Cladogram:
+		Find a way to code a cladogram that is easily programmable for more additions to it, as well as expandable and collapsable sections. Each species will have ancestors and descendants, so this can be used for the cladogram.
+
+Bestiary:
+		All species should be listed somewhere searchable. Might have to program in a search feature if Godot doesn't come with one supported already.
+
+################################################################################
+ZONES:
+	Zones are wider areas on a map. The user can click anywhere within the zone and information about it will pop up. However, if the user lands on a location of interest, even if it's within a zone, it should not show zone information. It should instead only show location of interest information.
+	
+	In the case of zones within a zone, upon click a small window should pop up listing which zones are available to inspect.
+	
+	Zone inspection:
+		Zone inspection should show the following information:
+			* Something about the geology
+			* Something about the ecology
+			* Something about the climate
+			* Highlight variations in the above, or habitats like rivers or mountains within the zone.
+			* A selection of species that give a feel of the environment.
+			* (Optional) Food webs.
+			* I think, to keep in theme with the format so far, the above information could be superficially conveyed in one big graphic that they user can explore and dive deeper into through clicking on LOIs and zones within the graphic.
+
+################################################################################
+STORY:
+
+	There should be an introductory cutscene. It should show (at minimum) Max discovering the planet, his excitement, the ship full of cats, Max detaching the dome, the dome's descent, the dome landing, a hive of robot activity coming from and around the dome, surveying the land and scattering seeds of some kind, release of the bees, then a passage of time, then the release of the rabbits, sparrows and mice, then finally the cats. The next scene should be the old man reclining in his mobility exoskeleton in the light of the alien planet's moon, being checked on by a robot. The outcome is implied. The final scene is of the dome being dismantled, with volatile parts being launched into space individually (due to limited fuel), and of a robot standing before a grave in the wide floodplain of an old river canyon.
+
+First, the map should be presented to the user. There is a short tutorial here on how to use the map, how the user can discover the gradual expansion of cats and other animals across the planet, etc.
+
+Then, the user will be shown how they can also access the bestiary and cladogram (and what information they can give).
+
+The user will be able to explore any part of the map but to move forward in time they have to discover a minimum amount of things or all of a certain thing (like all the cats).
+
+
+
+
+################################################################################
+
+
+
+Add first clickable location of interest.
+	* The position should be stored in the map data, as well as some reference or id for the location and it's information for that point in history. There will probably need to be another autoload for locations of interest (maybe abbreviate to LOI for coding purposes), as well as a different autoload for broader ecosystems of a zone.
+	* Try button for selection of LOIs first.
+
+
+
+When the mouse is moving around and interacting with UI, inputs and area entered/exited should not occur. Why? Because there might be hundreds of active areas overlapping each other at once. There would be massive lag just from moving the mouse around AND possibly issues with not being able to keep up with mouse movements, resulting in incorrect area detection.
+
+A solution: When the left mouse button is clicked down past a certain number of seconds value (maybe 1.0 or 0.5), it records the coordinates and a second invisible cursor moves in at a measures pace and does the area detections. Whatever areas it's still detected as being in, it will list those species in a new window.
+
+
+
+Bugs:
+	On a LOI screen, if you hold and move, when releasing the mouse button, the user also ends up clicking any clickables that were underneath the cursor.
+	Solution:
+		When a mouse is clicked, it's position is stored.
+		When the mouse is released, this condition is checked:
+			Did it's position change (within a small margin)?
+			If so:
+				in the zone template, mouse click release function is prevented.
+			If not:
+				Normal click release function occurs in the zone template.

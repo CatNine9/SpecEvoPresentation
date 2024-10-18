@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://5neysnnko5tw"]
+
+[ext_resource type="Script" path="res://UI/Map/LOIButton.gd" id="1_sn5ls"]
+[ext_resource type="StyleBox" uid="uid://cx4eoxe0eqrb0" path="res://Styles/clear_button.tres" id="1_wp48x"]
+
+[node name="LOIButton" type="Button"]
+custom_minimum_size = Vector2(50, 50)
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+pivot_offset = Vector2(25, 25)
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = ExtResource("1_wp48x")
+theme_override_styles/disabled = ExtResource("1_wp48x")
+theme_override_styles/hover = ExtResource("1_wp48x")
+theme_override_styles/pressed = ExtResource("1_wp48x")
+theme_override_styles/normal = ExtResource("1_wp48x")
+script = ExtResource("1_sn5ls")
+
+[node name="LOIICon" type="Sprite2D" parent="."]
+centered = false
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,0 +1,850 @@
+[gd_scene load_steps=19 format=3 uid="uid://c0dwxj52fs7af"]
+
+[ext_resource type="Script" path="res://MapExplorer.gd" id="1_nve62"]
+[ext_resource type="PackedScene" uid="uid://vxhpjokxp4ae" path="res://ExplorerCamera.tscn" id="2_2gxkn"]
+[ext_resource type="Texture2D" uid="uid://bg4syotjtnyac" path="res://Maps/451Yh New Map North Winter.png" id="3_oj667"]
+[ext_resource type="StyleBox" uid="uid://b21qapejqqahn" path="res://Styles/default_window.tres" id="4_k8lgx"]
+[ext_resource type="PackedScene" uid="uid://baya37l0ovqlq" path="res://UI/Map/ZoneTemplate.tscn" id="4_xn7at"]
+[ext_resource type="LabelSettings" uid="uid://cyxldc80xmgmj" path="res://Text/small_white_text_black_border.tres" id="5_k4ihg"]
+[ext_resource type="Texture2D" uid="uid://bikd2df0233ea" path="res://UI/Windows/ExitX.png" id="5_ryslf"]
+[ext_resource type="LabelSettings" uid="uid://cqgv3aflfp7c2" path="res://Text/default_title.tres" id="5_s7ny3"]
+[ext_resource type="LabelSettings" uid="uid://bpmucnlyabcrw" path="res://Text/medium_white_text_black_border.tres" id="9_6hd6t"]
+[ext_resource type="Texture2D" uid="uid://cpx6mlix10dip" path="res://Zones/LandingSiteZoneHighAlt451Placeholder.png" id="9_kobsu"]
+[ext_resource type="Texture2D" uid="uid://dvi3f3swnwbss" path="res://Locations/DomeSurroundingsPlaceholder.png" id="9_v6wmm"]
+[ext_resource type="LabelSettings" uid="uid://dx00qmgbdcu70" path="res://Text/medium_black_text_bold.tres" id="11_5xivy"]
+[ext_resource type="LabelSettings" uid="uid://f6uq8ix60kcj" path="res://Text/small_black_text_bold.tres" id="11_e7utr"]
+[ext_resource type="LabelSettings" uid="uid://bil2vvkhh17gi" path="res://Text/small_black_text.tres" id="12_2dl75"]
+[ext_resource type="StyleBox" uid="uid://dyhut5i4h8kvl" path="res://Styles/opaque_dark_grey.tres" id="15_ulv03"]
+[ext_resource type="StyleBox" uid="uid://bq3cvr2nqu5bq" path="res://Styles/opaque_light_grey.tres" id="16_6av2f"]
+[ext_resource type="LabelSettings" uid="uid://c1bia1l1fnsno" path="res://Text/v_large_black_text.tres" id="17_2d01p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_og43o"]
+radius = 5.09902
+
+[node name="MapExplorer" type="Node2D"]
+script = ExtResource("1_nve62")
+
+[node name="ExplorerCamera" parent="." instance=ExtResource("2_2gxkn")]
+offset = Vector2(0, 0)
+
+[node name="MapControl" type="Control" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(4000, 2000)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MapImage" type="TextureRect" parent="MapControl"]
+layout_mode = 2
+offset_right = 4000.0
+offset_bottom = 2000.0
+mouse_filter = 2
+texture = ExtResource("3_oj667")
+stretch_mode = 1
+
+[node name="ZonePickerControl" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(240, 125)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 240.0
+offset_bottom = 125.0
+
+[node name="PanelContainer" type="PanelContainer" parent="ZonePickerControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ZonePickerControl/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="ZonePickerControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="Label" type="Label" parent="ZonePickerControl/PanelContainer/VBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Which zone?"
+label_settings = ExtResource("5_k4ihg")
+
+[node name="PanelContainer2" type="PanelContainer" parent="ZonePickerControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="ZoneButtonContainer" type="VBoxContainer" parent="ZonePickerControl/PanelContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Zones" type="Node2D" parent="."]
+
+[node name="ZoneTemplate" parent="Zones" instance=ExtResource("4_xn7at")]
+
+[node name="LOIs" type="Node2D" parent="."]
+
+[node name="Ranges" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LocationViewControl" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/LocationViewControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/LocationViewControl/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="ControlContainer" type="PanelContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="CloseLocationViewButton" type="Button" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseLocationViewButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseLocationViewButton/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseLocationViewButton/MarginContainer/Control"]
+layout_mode = 2
+offset_right = 15.0
+offset_bottom = 15.0
+scale = Vector2(0.85, 0.85)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_ryslf")
+
+[node name="LocationNameContainer" type="PanelContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="LocationNameTitle" type="Label" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/LocationNameContainer"]
+custom_minimum_size = Vector2(990, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Location Name"
+label_settings = ExtResource("5_s7ny3")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="LocationImageContainer" type="PanelContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/LocationImageContainer"]
+layout_mode = 2
+
+[node name="LocationImageRect" type="TextureRect" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/LocationImageContainer/ScrollContainer"]
+custom_minimum_size = Vector2(2000, 1000)
+layout_mode = 2
+texture = ExtResource("9_v6wmm")
+expand_mode = 1
+
+[node name="LocationOptionsContainer" type="PanelContainer" parent="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="ZoneViewControl" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ZoneViewControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="ZoneViewContainer" type="PanelContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="ControlContainer" type="PanelContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="CloseZoneViewButton" type="Button" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseZoneViewButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseZoneViewButton/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseZoneViewButton/MarginContainer/Control"]
+layout_mode = 2
+offset_right = 15.0
+offset_bottom = 15.0
+scale = Vector2(0.85, 0.85)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_ryslf")
+
+[node name="TitleContainer" type="PanelContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="ZoneTitleLabel" type="Label" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/TitleContainer"]
+custom_minimum_size = Vector2(990, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Window Title"
+label_settings = ExtResource("5_s7ny3")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="ContentContainer" type="PanelContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ContentContainer"]
+layout_mode = 2
+
+[node name="ZoneImageRect" type="TextureRect" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ContentContainer/ScrollContainer"]
+custom_minimum_size = Vector2(2000, 1000)
+layout_mode = 2
+texture = ExtResource("9_kobsu")
+expand_mode = 1
+
+[node name="PositionFinder" type="Marker2D" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ContentContainer/ScrollContainer/ZoneImageRect"]
+editor_description = "For editor use only to find positions."
+position = Vector2(1230, 252.953)
+
+[node name="ZoneOptionsContainer" type="PanelContainer" parent="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="TimelineControl" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/TimelineControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/TimelineControl/MarginContainer"]
+custom_minimum_size = Vector2(900, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="CurrentYearLabel" type="Label" parent="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Year:"
+label_settings = ExtResource("9_6hd6t")
+
+[node name="PreviousTimeButton" type="Button" parent="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 45)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/PreviousTimeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "<"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextTimeButton" type="Button" parent="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 45)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/NextTimeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = ">"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeciesListControl" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/SpeciesListControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("15_ulv03")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = ExtResource("16_6av2f")
+
+[node name="Label" type="Label" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+text = "All species at this pin:"
+label_settings = ExtResource("11_5xivy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("16_6av2f")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SpeciesListScrollContainer" type="ScrollContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("15_ulv03")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SpeciesListControl/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer/MarginContainer/SpeciesListScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SpeciesViewControl" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SpeciesViewControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="SpeciesViewContainer" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="ControlContainer" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="CloseSpeciesViewButton" type="Button" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseSpeciesViewButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseSpeciesViewButton/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseSpeciesViewButton/MarginContainer/Control"]
+layout_mode = 2
+offset_right = 15.0
+offset_bottom = 15.0
+scale = Vector2(0.85, 0.85)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_ryslf")
+
+[node name="TitleContainer" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Ancestor:"
+label_settings = ExtResource("11_5xivy")
+
+[node name="AncestorButton" type="Button" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="AncestorLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer/AncestorButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AncestorButton2" type="LinkButton" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Panel" type="Panel" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer/AncestorButton2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="AncestorLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer/AncestorButton2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="SpeciesTitleLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer"]
+custom_minimum_size = Vector2(990, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Species Name"
+label_settings = ExtResource("5_s7ny3")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="DescendantSelector" type="OptionButton" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="ContentContainer" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SpeciesImage" type="TextureRect" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(750, 750)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+expand_mode = 1
+stretch_mode = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InfoBlock" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock"]
+layout_mode = 2
+
+[node name="FieldLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Field:"
+label_settings = ExtResource("11_e7utr")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contents of this field."
+label_settings = ExtResource("12_2dl75")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="InfoBlock3" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock3"]
+layout_mode = 2
+
+[node name="TimespanLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock3/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Timespan:"
+label_settings = ExtResource("11_e7utr")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TimespanField" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock3/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contents of this field."
+label_settings = ExtResource("12_2dl75")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="InfoBlock2" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock2"]
+layout_mode = 2
+
+[node name="RangeHabitatLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock2/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Range and habitat:"
+label_settings = ExtResource("11_e7utr")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RangeHabitatField" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contents of this field."
+label_settings = ExtResource("12_2dl75")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="InfoBlock5" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock5"]
+layout_mode = 2
+
+[node name="EcologyLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock5/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Ecology:"
+label_settings = ExtResource("11_e7utr")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="EcologyField" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock5/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contents of this field."
+label_settings = ExtResource("12_2dl75")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="InfoBlock4" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock4"]
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock4/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Description:"
+label_settings = ExtResource("11_e7utr")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="DescriptionField" type="Label" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ContentContainer/ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/InfoBlock4/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Contents of this field."
+label_settings = ExtResource("12_2dl75")
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="SpeciesOptionsContainer" type="PanelContainer" parent="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="MapExtension" type="Sprite2D" parent="."]
+position = Vector2(-2000, 1000)
+texture = ExtResource("3_oj667")
+
+[node name="MapExtension2" type="Sprite2D" parent="."]
+position = Vector2(6000, 1000)
+texture = ExtResource("3_oj667")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+visible = false
+position = Vector2(1812, 1340)
+
+[node name="InvisibleCursor" type="Area2D" parent="."]
+visible = false
+
+[node name="PlusLabel" type="Label" parent="InvisibleCursor"]
+offset_left = -40.0
+offset_top = -50.0
+offset_right = 40.0
+offset_bottom = 48.0
+text = "+"
+label_settings = ExtResource("17_2d01p")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvisibleCursor"]
+shape = SubResource("CircleShape2D_og43o")
+
+[connection signal="button_up" from="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseLocationViewButton" to="." method="_on_close_location_view_button_button_up"]
+[connection signal="mouse_entered" from="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/LocationImageContainer/ScrollContainer/LocationImageRect" to="." method="_on_location_image_rect_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/LocationImageContainer/ScrollContainer/LocationImageRect" to="." method="_on_location_image_rect_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer" to="." method="_on_zone_view_container_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer" to="." method="_on_zone_view_container_mouse_exited"]
+[connection signal="button_up" from="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseZoneViewButton" to="." method="_on_close_zone_view_button_button_up"]
+[connection signal="mouse_entered" from="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ContentContainer/ScrollContainer/ZoneImageRect" to="." method="_on_zone_image_rect_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ContentContainer/ScrollContainer/ZoneImageRect" to="." method="_on_zone_image_rect_mouse_exited"]
+[connection signal="button_up" from="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/PreviousTimeButton" to="." method="_on_previous_time_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/NextTimeButton" to="." method="_on_next_time_button_button_up"]
+[connection signal="mouse_entered" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer" to="." method="_on_species_view_container_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer" to="." method="_on_species_view_container_mouse_exited"]
+[connection signal="button_up" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseSpeciesViewButton" to="." method="_on_close_species_view_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer/AncestorButton2" to="." method="_on_ancestor_button_2_button_up"]
+
+[editable path="Zones/ZoneTemplate"]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6fmfp2s0iufx"]
+
+[ext_resource type="Script" path="res://Zones/WestCatlandLandingZone451.gd" id="1_dqqvj"]
+
+[node name="WestCatlandLandingZone451" type="Node"]
+script = ExtResource("1_dqqvj")
+
+[node name="ZoneShapePolygon" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1757, 1352, 1771, 1326, 1778, 1343, 1784, 1330, 1793, 1342, 1796, 1328, 1804, 1330, 1810, 1344, 1816, 1331, 1828, 1341, 1830, 1358, 1822, 1370, 1816, 1369, 1814, 1365, 1811, 1368, 1811, 1364, 1808, 1361, 1805, 1363, 1797, 1363, 1794, 1373, 1777, 1379, 1773, 1375, 1768, 1381)

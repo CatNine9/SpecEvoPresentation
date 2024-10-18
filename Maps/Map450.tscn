@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://j2qc17yn53v8"]
+
+[ext_resource type="Script" path="res://Maps/Map450.gd" id="1_446v1"]
+
+[node name="Map450" type="Node"]
+script = ExtResource("1_446v1")

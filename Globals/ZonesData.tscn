@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpgaywdhwbs82"]
+
+[ext_resource type="Script" path="res://Globals/ZonesData.gd" id="1_225hd"]
+
+[node name="ZonesData" type="Node"]
+script = ExtResource("1_225hd")

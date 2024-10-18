@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8wmkgc6f5jnn"]
+
+[ext_resource type="Script" path="res://Maps/Map2M.gd" id="1_bdvre"]
+
+[node name="Map2m" type="Node"]
+script = ExtResource("1_bdvre")

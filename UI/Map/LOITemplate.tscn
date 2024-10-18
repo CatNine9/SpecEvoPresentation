@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://ybdbnsdismgk"]
+
+[ext_resource type="Script" path="res://UI/Map/LOITemplate.gd" id="1_xsce7"]
+
+[node name="LOITemplate" type="Area2D"]
+script = ExtResource("1_xsce7")
+
+[node name="LOIShapePolygon" type="CollisionPolygon2D" parent="."]
+
+[node name="LOIShapeLine" type="Line2D" parent="."]
+closed = true
+width = 0.0
+
+[node name="LOIShapeFill" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 0)
+
+[node name="LOISprite" type="Sprite2D" parent="."]
+visible = false
+hframes = 5
+
+[node name="AnimationCycleTime" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="FrameChangeTime" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="AnimationCycleTime" to="." method="_on_animation_cycle_time_timeout"]
+[connection signal="timeout" from="FrameChangeTime" to="." method="_on_frame_change_time_timeout"]

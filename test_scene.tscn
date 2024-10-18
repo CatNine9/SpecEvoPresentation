@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwbpk1fdpv7td"]
+
+[ext_resource type="Script" path="res://Node2D.gd" id="1_kui3a"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_kui3a")
+
+[node name="LinkButton" type="LinkButton" parent="."]
+modulate = Color(0.392157, 0.317647, 0.521569, 1)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="button_up" from="LinkButton" to="." method="_on_link_button_button_up"]

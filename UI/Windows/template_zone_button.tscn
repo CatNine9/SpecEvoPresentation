@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6fgmvbc0lrau"]
+
+[ext_resource type="StyleBox" uid="uid://b21qapejqqahn" path="res://Styles/default_window.tres" id="1_lhfvj"]
+[ext_resource type="Script" path="res://UI/Windows/template_zone_button.gd" id="2_03org"]
+[ext_resource type="LabelSettings" uid="uid://cyxldc80xmgmj" path="res://Text/small_white_text_black_border.tres" id="2_dbmdi"]
+
+[node name="TemplateZoneButton" type="Button"]
+custom_minimum_size = Vector2(0, 35)
+size_flags_vertical = 0
+theme_override_styles/normal = ExtResource("1_lhfvj")
+script = ExtResource("2_03org")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Template Button"
+label_settings = ExtResource("2_dbmdi")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

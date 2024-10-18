@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://vxhpjokxp4ae"]
+
+[ext_resource type="Script" path="res://ExplorerCamera.gd" id="1_bi8mu"]
+
+[node name="ExplorerCamera" type="Camera2D"]
+offset = Vector2(576, 324)
+script = ExtResource("1_bi8mu")
+move_speed = 500
