@@ -30,6 +30,7 @@ var previous_mouse_position = Vector2(0, 0)
 @onready var loi_image = $CanvasLayer/LocationViewControl/MarginContainer/PanelContainer/VBoxContainer/LocationImageContainer/ScrollContainer/LocationImageRect
 
 @onready var ranges_layer = $Ranges
+@onready var land_ranges = $Ranges/LandBasePolygons
 
 @onready var zone_window = $CanvasLayer/ZoneViewControl
 @onready var zone_container = $CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer
@@ -61,8 +62,9 @@ func _ready():
 	GlobalSignals.connect("opening_species_window", open_species_window)
 	GlobalSignals.connect("inspecting_zones", inspect_hovered_zones)
 	load_current_map()
-	#load_zones()
-	#load_buttons()
+	load_land_polygons()
+	load_zones()
+	load_buttons()
 	load_species_areas()
 
 
@@ -136,6 +138,16 @@ func load_current_map():
 	explorer_camera.global_position = MapGlobal.current_map_start_position
 	map_extension_1.texture = map_image.texture
 	map_extension_2.texture = map_image.texture
+
+
+
+func load_land_polygons():
+	print(MapGlobal.current_map.shape.get_children())
+	for this_polygon in MapGlobal.current_map.shape.get_children():
+		var new_polygon = Polygon2D.new()
+		new_polygon.polygon = this_polygon.polygon
+		new_polygon.modulate = Color(1.0, 1.0, 1.0, 0.0)
+		land_ranges.add_child(new_polygon)
 
 
 

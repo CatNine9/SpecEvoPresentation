@@ -94,6 +94,8 @@ theme_override_constants/separation = 0
 
 [node name="Ranges" type="Node2D" parent="."]
 
+[node name="LandBasePolygons" type="Node2D" parent="Ranges"]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="LocationViewControl" type="Control" parent="CanvasLayer"]
