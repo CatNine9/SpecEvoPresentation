@@ -84,6 +84,7 @@ func _input(event):
 			previous_mouse_position = get_global_mouse_position() - global_position
 		if MapGlobal.is_loi_image_focused:
 			previous_mouse_position = get_global_mouse_position() - global_position
+
 	if Input.is_action_pressed("left_click"):
 		if MapGlobal.is_viewing_species:
 			return
@@ -95,6 +96,7 @@ func _input(event):
 				drag_scroll_image(zone_image, previous_zone_scroll_positions)
 			if MapGlobal.is_loi_image_focused:
 				drag_scroll_image(loi_image, previous_loi_scroll_positions)
+
 	if event.is_action_pressed("right_click"):
 		if not MapGlobal.is_ui_focused:
 			if species_list_control.visible:
@@ -132,7 +134,10 @@ func drag_scroll_image(image, scroll_positions):
 func load_current_map():
 	MapGlobal.current_map = MapData.load_map_data(MapGlobal.current_map_id)
 	MapGlobal.current_map_start_position = MapGlobal.current_map.map_start_position
-	map_image.texture = MapGlobal.current_map.map_sprite_nw
+	if MapGlobal.current_north_season == "Winter":
+		map_image.texture = MapGlobal.current_map.map_sprite_nw
+	else:
+		map_image.texture = MapGlobal.current_map.map_sprite_sw
 	MapGlobal.current_year = MapGlobal.current_map.map_year
 	current_year_label.text = "Year: " + str(MapGlobal.current_year)
 	explorer_camera.global_position = MapGlobal.current_map_start_position
@@ -398,6 +403,27 @@ func _on_next_time_button_button_up():
 
 
 
+func _on_summer_button_button_up():
+	if MapGlobal.current_north_season == "Winter":
+		MapGlobal.current_north_season = "Summer"
+		var map_script = MapData.load_map_data(MapGlobal.current_map_id)
+		map_image.texture = map_script.map_sprite_sw
+		map_extension_1.texture = map_script.map_sprite_sw
+		map_extension_2.texture = map_script.map_sprite_sw
+
+
+
+func _on_winter_button_button_up():
+	if MapGlobal.current_north_season == "Summer":
+		MapGlobal.current_north_season = "Winter"
+		var map_script = MapData.load_map_data(MapGlobal.current_map_id)
+		map_image.texture = map_script.map_sprite_nw
+		map_extension_1.texture = map_script.map_sprite_nw
+		map_extension_2.texture = map_script.map_sprite_nw
+
+
+
+
 ################################################################################
 # Called internally from signal functions:
 
@@ -448,21 +474,3 @@ func refresh_map():
 	load_current_map()
 	load_zones()
 	load_buttons()
-
-
-func _on_summer_button_button_up():
-	if MapGlobal.current_north_season == "Winter":
-		MapGlobal.current_north_season = "Summer"
-		var map_script = MapData.load_map_data(MapGlobal.current_map_id)
-		map_image.texture = map_script.map_sprite_sw
-		map_extension_1.texture = map_script.map_sprite_sw
-		map_extension_2.texture = map_script.map_sprite_sw
-
-
-func _on_winter_button_button_up():
-	if MapGlobal.current_north_season == "Summer":
-		MapGlobal.current_north_season = "Winter"
-		var map_script = MapData.load_map_data(MapGlobal.current_map_id)
-		map_image.texture = map_script.map_sprite_nw
-		map_extension_1.texture = map_script.map_sprite_nw
-		map_extension_2.texture = map_script.map_sprite_nw
