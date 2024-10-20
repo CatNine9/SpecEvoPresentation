@@ -14,6 +14,7 @@ var can_move_camera = true
 
 var current_year = 0
 var current_map_id = 0
+var current_north_season = "Winter"
 var current_map = null
 var current_selected_loi = null
 var current_map_start_position = Vector2()

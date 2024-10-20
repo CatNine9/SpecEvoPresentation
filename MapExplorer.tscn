@@ -410,6 +410,80 @@ label_settings = ExtResource("9_6hd6t")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="NorthSeasonControl" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/NorthSeasonControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/NorthSeasonControl/MarginContainer"]
+custom_minimum_size = Vector2(900, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="CurrentSeasonLabel" type="Label" parent="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Season in North:"
+label_settings = ExtResource("9_6hd6t")
+
+[node name="SummerButton" type="Button" parent="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer"]
+modulate = Color(100, 100, 1, 1)
+custom_minimum_size = Vector2(120, 45)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer/SummerButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Summer
+"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WinterButton" type="Button" parent="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer"]
+modulate = Color(1, 100, 100, 1)
+custom_minimum_size = Vector2(100, 45)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer/WinterButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Winter
+"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SpeciesListControl" type="Control" parent="CanvasLayer"]
 visible = false
 layout_mode = 3
@@ -844,6 +918,8 @@ shape = SubResource("CircleShape2D_og43o")
 [connection signal="mouse_exited" from="CanvasLayer/ZoneViewControl/MarginContainer/ZoneViewContainer/VBoxContainer/ContentContainer/ScrollContainer/ZoneImageRect" to="." method="_on_zone_image_rect_mouse_exited"]
 [connection signal="button_up" from="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/PreviousTimeButton" to="." method="_on_previous_time_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/NextTimeButton" to="." method="_on_next_time_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer/SummerButton" to="." method="_on_summer_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/NorthSeasonControl/MarginContainer/HBoxContainer/WinterButton" to="." method="_on_winter_button_button_up"]
 [connection signal="mouse_entered" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer" to="." method="_on_species_view_container_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer" to="." method="_on_species_view_container_mouse_exited"]
 [connection signal="button_up" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseSpeciesViewButton" to="." method="_on_close_species_view_button_button_up"]

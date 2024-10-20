@@ -448,3 +448,21 @@ func refresh_map():
 	load_current_map()
 	load_zones()
 	load_buttons()
+
+
+func _on_summer_button_button_up():
+	if MapGlobal.current_north_season == "Winter":
+		MapGlobal.current_north_season = "Summer"
+		var map_script = MapData.load_map_data(MapGlobal.current_map_id)
+		map_image.texture = map_script.map_sprite_sw
+		map_extension_1.texture = map_script.map_sprite_sw
+		map_extension_2.texture = map_script.map_sprite_sw
+
+
+func _on_winter_button_button_up():
+	if MapGlobal.current_north_season == "Summer":
+		MapGlobal.current_north_season = "Winter"
+		var map_script = MapData.load_map_data(MapGlobal.current_map_id)
+		map_image.texture = map_script.map_sprite_nw
+		map_extension_1.texture = map_script.map_sprite_nw
+		map_extension_2.texture = map_script.map_sprite_nw
