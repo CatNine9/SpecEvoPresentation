@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://beiv5n5lt1aqw"]
+
+[ext_resource type="Script" path="res://UI/MainMenu.gd" id="1_bjg4d"]
+[ext_resource type="LabelSettings" uid="uid://bitsqjhipvdyv" path="res://Text/v_large_white_text_black_border.tres" id="1_ht307"]
+[ext_resource type="LabelSettings" uid="uid://cx8yvikp8gxyf" path="res://Text/large_white_text_black_border.tres" id="2_0p40k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5f5bj"]
+bg_color = Color(0, 0.667104, 0.80741, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bjg4d")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5f5bj")
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
+process_mode = 3
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(750, 0)
+layout_mode = 2
+text = "Speculative Evolution Project Explorer (Template)
+
+"
+label_settings = ExtResource("1_ht307")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NewButton" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/NewButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "New"
+label_settings = ExtResource("2_0p40k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadButton" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/LoadButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Load Bookmark"
+label_settings = ExtResource("2_0p40k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/SettingsButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Settings"
+label_settings = ExtResource("2_0p40k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="PanelContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/QuitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+label_settings = ExtResource("2_0p40k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_up" from="PanelContainer/CenterContainer/VBoxContainer/NewButton" to="." method="_on_new_button_button_up"]
+[connection signal="button_up" from="PanelContainer/CenterContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_up"]

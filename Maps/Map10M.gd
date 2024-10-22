@@ -2,6 +2,10 @@ extends Node
 
 
 
+@onready var shape = $Shape
+
+
+
 var map_id = 3
 var map_year = 10000000
 var map_start_position = Vector2(1812, 1340)

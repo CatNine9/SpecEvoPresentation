@@ -4,3 +4,5 @@
 
 [node name="Map10m" type="Node"]
 script = ExtResource("1_e7nmj")
+
+[node name="Shape" type="Node" parent="."]

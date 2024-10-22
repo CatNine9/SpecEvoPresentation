@@ -18,8 +18,11 @@ var previous_mouse_position = Vector2(0, 0)
 
 @onready var locations_of_interest = $LOIs
 
+@onready var escape_menu_control = $CanvasLayer/EscapeMenuControl
+
 @onready var timeline_control = $CanvasLayer/TimelineControl
 @onready var current_year_label = $CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/CurrentYearLabel
+@onready var north_season_control = $CanvasLayer/NorthSeasonControl
 
 @onready var zones = $Zones
 @onready var zone_picker_control = $ZonePickerControl
@@ -61,16 +64,16 @@ func _ready():
 	GlobalSignals.connect("opening_loi_window", open_loi_window)
 	GlobalSignals.connect("opening_species_window", open_species_window)
 	GlobalSignals.connect("inspecting_zones", inspect_hovered_zones)
-	load_current_map()
-	load_land_polygons()
-	load_zones()
-	load_buttons()
-	load_species_areas()
+	setup_map()
+	get_tree().paused = false
 
 
 
 ################################################################################
 #region Controls:
+# Input function and functions directly related to input:
+
+
 
 func _input(event):
 	if Input.is_action_just_pressed("left_click"):
@@ -99,22 +102,26 @@ func _input(event):
 
 	if event.is_action_pressed("right_click"):
 		if not MapGlobal.is_ui_focused:
-			if species_list_control.visible:
-				for this_button in species_list_scroll_container_vbox.get_children():
-					this_button.queue_free()
-				species_list_control.visible = false
-				MapGlobal.species_ranges_hovering.clear()
-			else:
-				species_list_control.visible = true
-				for this_species in MapGlobal.species_ranges_hovering:
-					var new_species_button = preload("res://UI/Buttons/TemplateListedSpecies.tscn").instantiate()
-					species_list_scroll_container_vbox.add_child(new_species_button)
-					new_species_button.species_name_label.text = this_species
+			open_inhabitants_list()
+	
+	if event.is_action_pressed("escape_menu"):
+		if not escape_menu_control.visible and not MapGlobal.is_ui_focused:
+			pause_exploring()
 
 
 
-func wait(seconds):
-	await get_tree().create_timer(seconds,true,true,false).timeout
+func open_inhabitants_list():
+	if species_list_control.visible:
+		for this_button in species_list_scroll_container_vbox.get_children():
+			this_button.queue_free()
+		species_list_control.visible = false
+		MapGlobal.species_ranges_hovering.clear()
+	else:
+		species_list_control.visible = true
+		for this_species in MapGlobal.species_ranges_hovering:
+			var new_species_button = preload("res://UI/Buttons/TemplateListedSpecies.tscn").instantiate()
+			species_list_scroll_container_vbox.add_child(new_species_button)
+			new_species_button.species_name_label.text = this_species
 
 
 
@@ -129,7 +136,29 @@ func drag_scroll_image(image, scroll_positions):
 #endregion
 
 ################################################################################
+#region General Utility
+# Misc reusable functions:
+
+
+
+func wait(seconds):
+	await get_tree().create_timer(seconds,true,true,false).timeout
+
+
+
+func setup_map():
+	load_current_map()
+	load_land_polygons()
+	#load_zones()
+	#load_buttons()
+	load_species_areas()
+#endregion
+
+################################################################################
 #region Called from ready:
+# Functions that are called when the map explorer scene is loaded:
+
+
 
 func load_current_map():
 	MapGlobal.current_map = MapData.load_map_data(MapGlobal.current_map_id)
@@ -147,12 +176,13 @@ func load_current_map():
 
 
 func load_land_polygons():
-	print(MapGlobal.current_map.shape.get_children())
-	for this_polygon in MapGlobal.current_map.shape.get_children():
-		var new_polygon = Polygon2D.new()
-		new_polygon.polygon = this_polygon.polygon
-		new_polygon.modulate = Color(1.0, 1.0, 1.0, 0.0)
-		land_ranges.add_child(new_polygon)
+	if MapGlobal.current_map.shape.get_children().size() > 0:
+		print(MapGlobal.current_map.shape.get_children())
+		for this_polygon in MapGlobal.current_map.shape.get_children():
+			var new_polygon = Polygon2D.new()
+			new_polygon.polygon = this_polygon.polygon
+			new_polygon.modulate = Color(1.0, 1.0, 1.0, 0.0)
+			land_ranges.add_child(new_polygon)
 
 
 
@@ -196,12 +226,13 @@ func load_species_areas():
 				new_range_area.range_species = this_species.species_name
 				new_range_area.range_index = range_count
 				range_count += 1
-
-
 #endregion
 
 ################################################################################
 #region Area signals:
+# Functions that run when the mouse hovers over certain polygon shapes:
+
+
 
 func _on_zone_view_container_mouse_entered():
 	MapGlobal.is_ui_focused = true
@@ -243,8 +274,8 @@ func _on_species_view_container_mouse_exited():
 #endregion
 
 ################################################################################
-# Called from GlobalSignals:
-
+#region Called from signals
+# Functions that are called when a global signal is triggered.
 
 
 func open_loi_window(this_loi_name):
@@ -256,6 +287,7 @@ func open_loi_window(this_loi_name):
 	v_scroll.mouse_filter = 2
 	zone_window.visible = false
 	timeline_control.visible = false
+	north_season_control.visible = false
 	MapGlobal.can_move_camera = false
 	MapGlobal.is_loi_focused = false
 	loi_window.visible = true
@@ -339,6 +371,7 @@ func open_zone_window():
 	h_scroll.mouse_filter = 2
 	v_scroll.mouse_filter = 2
 	timeline_control.visible = false
+	north_season_control.visible = false
 	zone_window.visible = true
 	MapGlobal.can_move_camera = false
 	MapGlobal.is_loi_focused = false
@@ -359,9 +392,81 @@ func open_zone_window():
 	clear_hovered_zones()
 
 
+#endregion
 
 ################################################################################
-# Called from buttons:
+#region Called locally:
+# Functions called from other places locally from this script:
+
+
+
+func close_loi_window():
+	loi_window.visible = false
+	MapGlobal.can_move_camera = true
+	MapGlobal.is_loi_focused = false
+	timeline_control.visible = true
+	north_season_control.visible = true
+
+
+
+func close_zone_window():
+	zone_window.visible = false
+	MapGlobal.can_move_camera = true
+	MapGlobal.zones_hovering = []
+	timeline_control.visible = true
+	north_season_control.visible = true
+
+
+
+func close_species_window():
+	species_window.visible = false
+	MapGlobal.is_viewing_species = false
+
+
+
+func summon_zone_picker():
+	zone_picker_control.visible = true
+	zone_picker_control.global_position = get_global_mouse_position()
+
+
+
+func clear_hovered_zones():
+	MapGlobal.zones_hovering = []
+	for zone in zones.get_children():
+		zone.is_hovered = false
+
+
+
+func refresh_map():
+	# First clear zones and buttons
+	for this_zone in zones.get_children():
+		this_zone.queue_free()
+	for this_loi in locations_of_interest.get_children():
+		this_loi.queue_free()
+	for this_land in land_ranges.get_children():
+		this_land.queue_free()
+	for this_range in ranges_layer.get_children():
+		if this_range.get_class() == "Area2D":
+			this_range.queue_free()
+	# Then:
+	setup_map()
+
+
+
+func pause_exploring():
+	get_tree().paused = true
+	escape_menu_control.visible = true
+
+
+
+func resume_exploring():
+	get_tree().paused = false
+	escape_menu_control.visible = false
+#endregion
+
+################################################################################
+#region Called from button signals
+# For when certain buttons are pressed.
 
 
 
@@ -423,54 +528,17 @@ func _on_winter_button_button_up():
 
 
 
-
-################################################################################
-# Called internally from signal functions:
-
-
-
-func close_loi_window():
-	loi_window.visible = false
-	MapGlobal.can_move_camera = true
-	MapGlobal.is_loi_focused = false
-	timeline_control.visible = true
+func _on_quit_button_button_up():
+	get_tree().quit()
 
 
 
-func close_zone_window():
-	zone_window.visible = false
-	MapGlobal.can_move_camera = true
-	MapGlobal.zones_hovering = []
-	timeline_control.visible = true
+func _on_return_button_button_up():
+	#get_tree().change_scene_to_file("res://UI/MainMenu.tscn")
+	queue_free()
 
 
 
-func close_species_window():
-	species_window.visible = false
-	MapGlobal.is_viewing_species = false
-
-
-
-func summon_zone_picker():
-	zone_picker_control.visible = true
-	zone_picker_control.global_position = get_global_mouse_position()
-
-
-
-func clear_hovered_zones():
-	MapGlobal.zones_hovering = []
-	for zone in zones.get_children():
-		zone.is_hovered = false
-
-
-
-func refresh_map():
-	# First clear zones and buttons
-	for this_zone in zones.get_children():
-		this_zone.queue_free()
-	for this_loi in locations_of_interest.get_children():
-		this_loi.queue_free()
-	# Then:
-	load_current_map()
-	load_zones()
-	load_buttons()
+func _on_resume_button_button_up():
+	resume_exploring()
+#endregion

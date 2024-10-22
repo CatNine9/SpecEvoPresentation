@@ -65,8 +65,7 @@ When the mouse is moving around and interacting with UI, inputs and area entered
 A solution: When the left mouse button is clicked down past a certain number of seconds value (maybe 1.0 or 0.5), it records the coordinates and a second invisible cursor moves in at a measures pace and does the area detections. Whatever areas it's still detected as being in, it will list those species in a new window.
 
 
-
-Bugs:
+Solved:
 	On a LOI screen, if you hold and move, when releasing the mouse button, the user also ends up clicking any clickables that were underneath the cursor.
 	Solution:
 		When a mouse is clicked, it's position is stored.
@@ -76,3 +75,8 @@ Bugs:
 				in the zone template, mouse click release function is prevented.
 			If not:
 				Normal click release function occurs in the zone template.
+
+Bugs:
+
+	
+	When a zone window is opened, any animatable LOIs are timed to animate again, so each time it's closed and reopened, the animations become more numerous and frequent.

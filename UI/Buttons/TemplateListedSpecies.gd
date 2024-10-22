@@ -7,5 +7,5 @@ extends Button
 
 
 func _on_button_up():
-	print("Button clicked")
-	GlobalSignals.open_species_window(species_name_label.text)
+	if not MapGlobal.is_ui_focused:
+		GlobalSignals.open_species_window(species_name_label.text)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c0dwxj52fs7af"]
+[gd_scene load_steps=20 format=3 uid="uid://c0dwxj52fs7af"]
 
 [ext_resource type="Script" path="res://MapExplorer.gd" id="1_nve62"]
 [ext_resource type="PackedScene" uid="uid://vxhpjokxp4ae" path="res://ExplorerCamera.tscn" id="2_2gxkn"]
@@ -17,6 +17,7 @@
 [ext_resource type="StyleBox" uid="uid://dyhut5i4h8kvl" path="res://Styles/opaque_dark_grey.tres" id="15_ulv03"]
 [ext_resource type="StyleBox" uid="uid://bq3cvr2nqu5bq" path="res://Styles/opaque_light_grey.tres" id="16_6av2f"]
 [ext_resource type="LabelSettings" uid="uid://c1bia1l1fnsno" path="res://Text/v_large_black_text.tres" id="17_2d01p"]
+[ext_resource type="Script" path="res://UI/EscapeMenuControl.gd" id="17_b45ka"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_og43o"]
 radius = 5.09902
@@ -880,6 +881,89 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("4_k8lgx")
 
+[node name="EscapeMenuControl" type="Control" parent="CanvasLayer"]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_force_pass_scroll_events = false
+script = ExtResource("17_b45ka")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/EscapeMenuControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/EscapeMenuControl/CenterContainer"]
+custom_minimum_size = Vector2(400, 100)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Resume Exploring"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ReturnButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Return to Main Menu"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+label_settings = ExtResource("9_6hd6t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="MapExtension" type="Sprite2D" parent="."]
 position = Vector2(-2000, 1000)
 texture = ExtResource("3_oj667")
@@ -924,5 +1008,8 @@ shape = SubResource("CircleShape2D_og43o")
 [connection signal="mouse_exited" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer" to="." method="_on_species_view_container_mouse_exited"]
 [connection signal="button_up" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseSpeciesViewButton" to="." method="_on_close_species_view_button_button_up"]
 [connection signal="button_up" from="CanvasLayer/SpeciesViewControl/MarginContainer/SpeciesViewContainer/VBoxContainer/TitleContainer/HBoxContainer/AncestorButton2" to="." method="_on_ancestor_button_2_button_up"]
+[connection signal="button_up" from="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/ReturnButton" to="." method="_on_return_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/EscapeMenuControl/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_up"]
 
 [editable path="Zones/ZoneTemplate"]

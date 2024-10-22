@@ -4,3 +4,5 @@
 
 [node name="Map100k" type="Node"]
 script = ExtResource("1_l45mq")
+
+[node name="Shape" type="Node" parent="."]

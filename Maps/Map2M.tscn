@@ -4,3 +4,5 @@
 
 [node name="Map2m" type="Node"]
 script = ExtResource("1_bdvre")
+
+[node name="Shape" type="Node" parent="."]

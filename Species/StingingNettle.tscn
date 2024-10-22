@@ -67,4 +67,7 @@ polygon = PackedVector2Array(2752, 588, 2754, 590, 2761, 591, 2765, 594, 2775, 5
 [node name="RangeArea20" type="Polygon2D" parent="Ranges"]
 polygon = PackedVector2Array(2503, 610, 2526, 604, 2559, 594, 2579, 590, 2583, 588, 2581, 584, 2574, 588, 2566, 587, 2561, 590, 2558, 588, 2542, 588, 2537, 592, 2535, 590, 2539, 586, 2529, 588, 2527, 591, 2524, 591, 2523, 589, 2516, 589, 2510, 592, 2503, 598, 2495, 600, 2491, 603, 2489, 609, 2495, 610)
 
+[node name="RangeArea21" type="Polygon2D" parent="Ranges"]
+polygon = PackedVector2Array(896, 433, 901, 450, 913, 452, 913, 442)
+
 [node name="Disabled" type="Node" parent="."]
