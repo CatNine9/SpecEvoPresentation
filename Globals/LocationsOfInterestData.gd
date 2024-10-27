@@ -17,8 +17,8 @@ func _ready():
 
 
 func load_all_lois():
-	landing_site_450yh = preload("res://Locations/LandingSite451Yh.tscn").instantiate()
-	dome_surroundings_450yh = preload("res://Locations/DomeSurroundings451Yh.tscn").instantiate()
+	landing_site_450yh = preload("res://Zones/LandingSite451Yh.tscn").instantiate()
+	dome_surroundings_450yh = preload("res://Zones/DomeSurroundings451Yh.tscn").instantiate()
 	add_child(landing_site_450yh)
 	add_child(dome_surroundings_450yh)
 	for this_loi in get_children():

@@ -25,11 +25,8 @@ var current_selected_species = ""
 
 var zones_hovering = []
 var location_in_zones_hovering = null
-var is_loi_focused = false
+var is_clickdrag_focused = false
 var is_ui_focused = false
-var is_loi_in_zone_focused = false
-var is_loi_image_focused = false
-var is_zone_image_focused = false
 var is_viewing_species = false
 
 var species_ranges_hovering = []

@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://b4146raruxdsj"]
 
-[ext_resource type="Script" path="res://Locations/DomeSurroundings451Yh.gd" id="1_1bff2"]
+[ext_resource type="Script" path="res://Zones/DomeSurroundings451Yh.gd" id="1_1bff2"]
 
 [node name="DomeSurroundings451Yh" type="Node"]
 script = ExtResource("1_1bff2")
 
-[node name="LocationShapePolygon" type="CollisionPolygon2D" parent="."]
+[node name="ZoneShapePolygon" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(1160, 413, 1220, 463, 1300, 483, 1380, 483, 1460, 463, 1530, 403, 1500, 333, 1560, 323, 1660, 333, 1710, 393, 1720, 473, 1670, 543, 1390, 613, 1040, 583, 920, 483, 940, 343, 1060, 293, 1190, 323)
 
 [node name="Cats1" type="CollisionPolygon2D" parent="."]

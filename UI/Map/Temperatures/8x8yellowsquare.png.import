@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvi3f3swnwbss"
-path="res://.godot/imported/DomeSurroundingsPlaceholder.png-de6c00290d7a2e30fbba76db13c3da99.ctex"
+uid="uid://beqrpj47g5s4l"
+path="res://.godot/imported/8x8yellowsquare.png-5be8598439837719572b9242317f8f20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Locations/DomeSurroundingsPlaceholder.png"
-dest_files=["res://.godot/imported/DomeSurroundingsPlaceholder.png-de6c00290d7a2e30fbba76db13c3da99.ctex"]
+source_file="res://UI/Map/Temperatures/8x8yellowsquare.png"
+dest_files=["res://.godot/imported/8x8yellowsquare.png-5be8598439837719572b9242317f8f20.ctex"]
 
 [params]
 

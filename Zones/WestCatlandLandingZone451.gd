@@ -8,8 +8,7 @@ extends Node
 
 var zone_name = "West Catland Landing Zone 451 Yh"
 var zone_image = preload("res://Zones/LandingSiteZoneHighAlt451Placeholder.png")
-# Need an array to store all the locations and hidden locations in a zone.
-# Positions here are for the zone window view, not the world map view.
-# Hidden locations are locations that don't show on the map. They can only be discovered in the zone window.
-var zone_locations = ["Landing Site 450 Yh"]
-var zone_hidden_locations = []
+var zone_sprite = null
+var zone_sprite_position = Vector2()
+var zones_in_this_zone = ["Landing Site 450 Yh"]
+var zone_species = []

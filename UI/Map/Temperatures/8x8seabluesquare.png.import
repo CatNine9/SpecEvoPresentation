@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4jrmre2xjcbm"
-path="res://.godot/imported/IconLandingSiteNew.png-ebd0bc0c5dd7e4d8dfcd5aa4b14b368a.ctex"
+uid="uid://26ra81eaxto8"
+path="res://.godot/imported/8x8seabluesquare.png-c54515c4d872f2ac379a56dcc08acc2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Locations/IconLandingSiteNew.png"
-dest_files=["res://.godot/imported/IconLandingSiteNew.png-ebd0bc0c5dd7e4d8dfcd5aa4b14b368a.ctex"]
+source_file="res://UI/Map/Temperatures/8x8seabluesquare.png"
+dest_files=["res://.godot/imported/8x8seabluesquare.png-c54515c4d872f2ac379a56dcc08acc2e.ctex"]
 
 [params]
 

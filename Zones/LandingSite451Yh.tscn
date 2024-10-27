@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://bn6dvq8r0cmuq"]
 
-[ext_resource type="Script" path="res://Locations/LandingSite451Yh.gd" id="1_prrks"]
+[ext_resource type="Script" path="res://Zones/LandingSite451Yh.gd" id="1_prrks"]
 
 [node name="LandingSite451Yh" type="Node"]
 script = ExtResource("1_prrks")
 
-[node name="LocationShapePolygon" type="CollisionPolygon2D" parent="."]
+[node name="ZoneShapePolygon" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(1210, 243, 1230, 233, 1240, 243, 1250, 253, 1250, 273, 1240, 283, 1230, 283, 1220, 273, 1210, 263, 1210, 253)

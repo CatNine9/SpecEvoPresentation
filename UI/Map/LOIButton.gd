@@ -9,8 +9,10 @@ var loi_name = ""
 
 
 func _on_button_up():
-	if not MapGlobal.is_viewing_species:
-		GlobalSignals.open_loi_window(loi_name)
+	pass
+	#if not MapGlobal.is_viewing_species:
+		#GlobalSignals.open_loi_window(loi_name)
+		#
 
 
 
