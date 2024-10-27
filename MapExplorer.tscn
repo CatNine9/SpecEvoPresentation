@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://c0dwxj52fs7af"]
+[gd_scene load_steps=67 format=3 uid="uid://c0dwxj52fs7af"]
 
 [ext_resource type="Script" path="res://MapExplorer.gd" id="1_nve62"]
 [ext_resource type="PackedScene" uid="uid://vxhpjokxp4ae" path="res://ExplorerCamera.tscn" id="2_2gxkn"]
@@ -8,10 +8,15 @@
 [ext_resource type="LabelSettings" uid="uid://cyxldc80xmgmj" path="res://Text/small_white_text_black_border.tres" id="5_k4ihg"]
 [ext_resource type="Texture2D" uid="uid://bikd2df0233ea" path="res://UI/Windows/ExitX.png" id="5_ryslf"]
 [ext_resource type="LabelSettings" uid="uid://cqgv3aflfp7c2" path="res://Text/default_title.tres" id="5_s7ny3"]
+[ext_resource type="StyleBox" uid="uid://bnrglirws7h4e" path="res://Styles/light_cyan_button.tres" id="8_buytc"]
+[ext_resource type="LabelSettings" uid="uid://bitsqjhipvdyv" path="res://Text/v_large_white_text_black_border.tres" id="8_dxqx0"]
 [ext_resource type="LabelSettings" uid="uid://bpmucnlyabcrw" path="res://Text/medium_white_text_black_border.tres" id="9_6hd6t"]
+[ext_resource type="StyleBox" uid="uid://cumu2dxn046sy" path="res://Styles/light_cyan_disabled_button.tres" id="9_lvbip"]
 [ext_resource type="Texture2D" uid="uid://dvi3f3swnwbss" path="res://Zones/DomeSurroundingsPlaceholder.png" id="9_v6wmm"]
+[ext_resource type="StyleBox" uid="uid://cxfyok80oydjb" path="res://Styles/light_cyan_hovered_button.tres" id="10_c2pql"]
 [ext_resource type="LabelSettings" uid="uid://dx00qmgbdcu70" path="res://Text/medium_black_text_bold.tres" id="11_5xivy"]
 [ext_resource type="LabelSettings" uid="uid://f6uq8ix60kcj" path="res://Text/small_black_text_bold.tres" id="11_e7utr"]
+[ext_resource type="StyleBox" uid="uid://q45btd6jfpvj" path="res://Styles/light_cyan_pressed_button.tres" id="11_nq2bg"]
 [ext_resource type="LabelSettings" uid="uid://bil2vvkhh17gi" path="res://Text/small_black_text.tres" id="12_2dl75"]
 [ext_resource type="StyleBox" uid="uid://dyhut5i4h8kvl" path="res://Styles/opaque_dark_grey.tres" id="15_ulv03"]
 [ext_resource type="StyleBox" uid="uid://bq3cvr2nqu5bq" path="res://Styles/opaque_light_grey.tres" id="16_6av2f"]
@@ -357,7 +362,91 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("4_k8lgx")
 
-[node name="WindowNameTitle" type="Label" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 75
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BackPageButton" type="Button" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/disabled_mirrored = ExtResource("9_lvbip")
+theme_override_styles/disabled = ExtResource("9_lvbip")
+theme_override_styles/hover_pressed_mirrored = ExtResource("10_c2pql")
+theme_override_styles/hover_pressed = ExtResource("10_c2pql")
+theme_override_styles/hover_mirrored = ExtResource("10_c2pql")
+theme_override_styles/hover = ExtResource("10_c2pql")
+theme_override_styles/pressed_mirrored = ExtResource("11_nq2bg")
+theme_override_styles/pressed = ExtResource("11_nq2bg")
+theme_override_styles/normal_mirrored = ExtResource("8_buytc")
+theme_override_styles/normal = ExtResource("8_buytc")
+disabled = true
+
+[node name="Label" type="Label" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer/BackPageButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "<"
+label_settings = ExtResource("8_dxqx0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 75
+theme_override_constants/margin_bottom = 10
+
+[node name="ForwardPageButton" type="Button" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/disabled_mirrored = ExtResource("9_lvbip")
+theme_override_styles/disabled = ExtResource("9_lvbip")
+theme_override_styles/hover_pressed_mirrored = ExtResource("10_c2pql")
+theme_override_styles/hover_pressed = ExtResource("10_c2pql")
+theme_override_styles/hover_mirrored = ExtResource("10_c2pql")
+theme_override_styles/hover = ExtResource("10_c2pql")
+theme_override_styles/pressed_mirrored = ExtResource("11_nq2bg")
+theme_override_styles/pressed = ExtResource("11_nq2bg")
+theme_override_styles/normal_mirrored = ExtResource("8_buytc")
+theme_override_styles/normal = ExtResource("8_buytc")
+disabled = true
+
+[node name="Label2" type="Label" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer2/ForwardPageButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = ">"
+label_settings = ExtResource("8_dxqx0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_k8lgx")
+
+[node name="WindowNameTitle" type="Label" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer2"]
 custom_minimum_size = Vector2(990, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -366,6 +455,11 @@ label_settings = ExtResource("5_s7ny3")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = ExtResource("4_k8lgx")
 
 [node name="WindowImageContainer" type="PanelContainer" parent="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -389,6 +483,7 @@ mouse_filter = 2
 theme_override_styles/panel = ExtResource("4_k8lgx")
 
 [node name="TimelineControl" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -459,6 +554,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="NorthSeasonControl" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1044,6 +1140,8 @@ modulate = Color(1, 1, 1, 0.27)
 tile_set = SubResource("TileSet_q6ghy")
 
 [connection signal="button_up" from="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/ControlContainer/HBoxContainer/CloseClickdragViewButton" to="." method="_on_close_clickdrag_view_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer/BackPageButton" to="." method="_on_back_page_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer2/ForwardPageButton" to="." method="_on_forward_page_button_button_up"]
 [connection signal="mouse_entered" from="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowImageContainer/ScrollContainer/ClickdragImageRect" to="." method="_on_clickdrag_image_rect_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowImageContainer/ScrollContainer/ClickdragImageRect" to="." method="_on_clickdrag_image_rect_mouse_exited"]
 [connection signal="button_up" from="CanvasLayer/TimelineControl/MarginContainer/HBoxContainer/PreviousTimeButton" to="." method="_on_previous_time_button_button_up"]

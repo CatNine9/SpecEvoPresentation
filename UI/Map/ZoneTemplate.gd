@@ -24,10 +24,8 @@ func _ready():
 
 
 func _input(event):
-	if is_hovered == true: # and MapGlobal.is_loi_focused == false and MapGlobal.is_ui_focused == false and MapGlobal.is_viewing_species == false:
+	if is_hovered == true and MapGlobal.is_ui_focused == false and MapGlobal.is_viewing_species == false:
 		if event.is_action_released("left_click"):
-			#if MapGlobal.last_mouse_click_position.x < get_global_mouse_position().x + 10 and MapGlobal.last_mouse_click_position.x > get_global_mouse_position().x - 10:
-				#if MapGlobal.last_mouse_click_position.y < get_global_mouse_position().y + 10 and MapGlobal.last_mouse_click_position.y > get_global_mouse_position().y - 10:
 			GlobalSignals.inspect_zones()
 
 

@@ -24,6 +24,8 @@ var current_selected_species = ""
 
 
 var zones_hovering = []
+var navigation_history = []
+var nav_history_index = -1
 var location_in_zones_hovering = null
 var is_clickdrag_focused = false
 var is_ui_focused = false

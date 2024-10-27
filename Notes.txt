@@ -80,3 +80,6 @@ Bugs:
 	Zone window closes instead of switching to another window
 	
 	When a zone window is opened, any animatable LOIs are timed to animate again, so each time it's closed and reopened, the animations become more numerous and frequent.
+
+To do:
+	Make a navigation history and a forward and back button.

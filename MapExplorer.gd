@@ -25,8 +25,10 @@ var is_just_starting = true
 @onready var north_season_control = $CanvasLayer/NorthSeasonControl
 
 @onready var clickdrag_window_control = $CanvasLayer/ClickdragWindowControl
-@onready var clickdrag_title_label = $CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/WindowNameTitle
+@onready var clickdrag_title_label = $CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer2/WindowNameTitle
 @onready var clickdrag_image = $CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowImageContainer/ScrollContainer/ClickdragImageRect
+@onready var back_page_button = $CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer/BackPageButton
+@onready var forward_page_button = $CanvasLayer/ClickdragWindowControl/MarginContainer/PanelContainer/VBoxContainer/WindowNameContainer/HBoxContainer/PanelContainer/HBoxContainer/MarginContainer2/ForwardPageButton
 
 @onready var zone_picker_control = $ZonePickerControl
 @onready var zone_button_container = $ZonePickerControl/PanelContainer/VBoxContainer/PanelContainer2/ZoneButtonContainer
@@ -143,7 +145,6 @@ func refresh_map():
 	load_current_map()
 	load_land_polygons()
 	load_zones()
-	load_buttons()
 	load_species_areas()
 
 
@@ -158,12 +159,81 @@ func quit_map_to_main():
 #endregion
 
 ################################################################################
+#region Called from ready:
+# Functions that are called when the map explorer scene is loaded:
+
+func load_current_map():
+	MapGlobal.current_map = MapData.load_map_data(MapGlobal.current_map_id)
+	MapGlobal.current_map_start_position = MapGlobal.current_map.map_start_position
+	if MapGlobal.current_north_season == "Winter":
+		map_image.texture = MapGlobal.current_map.map_sprite_nw
+	else:
+		map_image.texture = MapGlobal.current_map.map_sprite_sw
+	MapGlobal.current_year = MapGlobal.current_map.map_year
+	current_year_label.text = "Year: " + str(MapGlobal.current_year)
+	explorer_camera.global_position = MapGlobal.current_map_start_position
+	map_extension_1.texture = map_image.texture
+	map_extension_2.texture = map_image.texture
+
+
+
+func load_land_polygons():
+	if not is_just_starting:
+		for this_land in land_ranges.get_children():
+			this_land.queue_free()
+	if MapGlobal.current_map.shape.get_children().size() > 0:
+		for this_polygon in MapGlobal.current_map.shape.get_children():
+			var new_polygon = Polygon2D.new()
+			new_polygon.polygon = this_polygon.polygon
+			new_polygon.modulate = Color(1.0, 1.0, 1.0, 0.0)
+			land_ranges.add_child(new_polygon)
+
+
+
+# If not start of game, clear current loaded zones first.
+func load_zones():
+	if not is_just_starting:
+		for this_zone in zones.get_children():
+			this_zone.queue_free()
+	for this_zone in MapGlobal.current_map.map_zones:
+		var new_zone = preload("res://UI/Map/ZoneTemplate.tscn").instantiate()
+		var zone_ref = ZonesData.load_zone(this_zone)
+		zones.add_child(new_zone)
+		new_zone.zone_name = zone_ref.zone_name
+		new_zone.zone_shape_line.default_color = Color(0.50, 0.80, 0.80, 0.25)
+		new_zone.zone_shape_fill.color = Color(0.50, 0.80, 0.80, 0.10)
+		new_zone.zone_shape_polygon.polygon = zone_ref.zone_shape_polygon.polygon
+		new_zone.zone_shape_line.points = new_zone.zone_shape_polygon.polygon
+		new_zone.zone_shape_fill.polygon = new_zone.zone_shape_polygon.polygon
+
+
+
+func load_species_areas():
+	if not is_just_starting:
+		for this_range in ranges_layer.get_children():
+			if this_range.get_class() == "Area2D":
+				this_range.queue_free()
+	for this_species in SpeciesData.get_children():
+		if MapGlobal.current_year <= this_species.species_timespan[this_species.species_timespan.size() - 1] and MapGlobal.current_year >= this_species.species_timespan[0]:
+			var range_count = 0
+			for this_range in this_species.population_ranges.get_children():
+				var new_range_area = preload("res://UI/Map/RangeAreaTemplate.tscn").instantiate()
+				ranges_layer.add_child(new_range_area)
+				new_range_area.range_shape.polygon = this_range.polygon
+				new_range_area.range_species = this_species.species_name
+				new_range_area.range_index = range_count
+				range_count += 1
+#endregion
+
+################################################################################
 #region UI Utility:
 
 
 
 func open_clickdrag_window(window_zone):
+	check_if_arrows_disabled()
 	clickdrag_window_control.visible = true
+	species_window.visible = false
 	MapGlobal.is_clickdrag_focused = true
 	if clickdrag_window_control.visible == false:
 		clear_map_zones()
@@ -244,6 +314,7 @@ func open_inhabitants_list():
 
 
 func open_species_window(species_name):
+	check_if_arrows_disabled()
 	MapGlobal.current_selected_species = species_name
 	species_window.visible = true
 	MapGlobal.is_viewing_species = true
@@ -289,6 +360,10 @@ func inspect_hovered_zones():
 			zone_button_container.label.text = this_zone.zone_name
 		# To actually test all this, make another overlapping zone.
 	else: # If the zone picker isn't needed...
+		print("Zones hovering: ", MapGlobal.zones_hovering)
+		var zone_data = ZonesData.load_zone(MapGlobal.zones_hovering[0].zone_name)
+		print("Zone data: ", zone_data)
+		record_history("Zone", zone_data)
 		open_clickdrag_window(MapGlobal.zones_hovering[0])
 	MapGlobal.zones_hovering.clear()
 
@@ -297,6 +372,53 @@ func open_zone_picker():
 	zone_picker_control.global_position = get_global_mouse_position()
 
 
+
+func record_history(page_type, page_data):
+	# The currently recorded entry should always be the last one, erasing any
+	# history recorded after this point. Acts like undo and redo in many modern
+	# applications.
+	# To do: If going back in history and making new history, it doesn't record the new history for some reason. Y?
+
+	MapGlobal.nav_history_index += 1
+	MapGlobal.navigation_history.append([page_type, page_data])
+	if MapGlobal.navigation_history.size() - 1> MapGlobal.nav_history_index:
+		var new_array = MapGlobal.navigation_history.slice(0, MapGlobal.nav_history_index + 1, 1, true)
+		MapGlobal.navigation_history = new_array.duplicate(true)
+
+
+
+
+
+func check_backwards_in_history():
+	MapGlobal.nav_history_index -= 1
+	open_history_entry()
+	check_if_arrows_disabled()
+
+func check_forwards_in_history():
+	MapGlobal.nav_history_index += 1
+	open_history_entry()
+	check_if_arrows_disabled()
+
+func open_history_entry():
+	var this_history_entry = MapGlobal.navigation_history[MapGlobal.nav_history_index]
+	if this_history_entry[0] == "Zone":
+		open_clickdrag_window(this_history_entry[1])
+	elif this_history_entry[0] == "Species":
+		open_species_window(this_history_entry[1].species_name)
+
+func check_if_arrows_disabled():
+	if MapGlobal.nav_history_index <= 0:
+		back_page_button.disabled = true
+	else:
+		back_page_button.disabled = false
+	if MapGlobal.nav_history_index >= MapGlobal.navigation_history.size() - 1:
+		forward_page_button.disabled = true
+	else:
+		forward_page_button.disabled = false
+#endregion
+
+################################################################################
+#region Map Interaction:
 
 func change_to_previous_timestop():
 	var all_maps = MapData.get_children()
@@ -329,92 +451,6 @@ func change_to_n_winter():
 		map_image.texture = map_script.map_sprite_sw
 		map_extension_1.texture = map_script.map_sprite_sw
 		map_extension_2.texture = map_script.map_sprite_sw
-#endregion
-
-################################################################################
-#region Called from ready:
-# Functions that are called when the map explorer scene is loaded:
-
-
-
-func load_current_map():
-	MapGlobal.current_map = MapData.load_map_data(MapGlobal.current_map_id)
-	MapGlobal.current_map_start_position = MapGlobal.current_map.map_start_position
-	if MapGlobal.current_north_season == "Winter":
-		map_image.texture = MapGlobal.current_map.map_sprite_nw
-	else:
-		map_image.texture = MapGlobal.current_map.map_sprite_sw
-	MapGlobal.current_year = MapGlobal.current_map.map_year
-	current_year_label.text = "Year: " + str(MapGlobal.current_year)
-	explorer_camera.global_position = MapGlobal.current_map_start_position
-	map_extension_1.texture = map_image.texture
-	map_extension_2.texture = map_image.texture
-
-
-
-func load_land_polygons():
-	if not is_just_starting:
-		for this_land in land_ranges.get_children():
-			this_land.queue_free()
-	if MapGlobal.current_map.shape.get_children().size() > 0:
-		for this_polygon in MapGlobal.current_map.shape.get_children():
-			var new_polygon = Polygon2D.new()
-			new_polygon.polygon = this_polygon.polygon
-			new_polygon.modulate = Color(1.0, 1.0, 1.0, 0.0)
-			land_ranges.add_child(new_polygon)
-
-
-
-# If not start of game, clear current loaded zones first.
-func load_zones():
-	if not is_just_starting:
-		for this_zone in zones.get_children():
-			this_zone.queue_free()
-	for this_zone in MapGlobal.current_map.map_zones:
-		var new_zone = preload("res://UI/Map/ZoneTemplate.tscn").instantiate()
-		var zone_ref = ZonesData.load_zone(this_zone)
-		zones.add_child(new_zone)
-		new_zone.zone_name = zone_ref.zone_name
-		new_zone.zone_shape_line.default_color = Color(0.50, 0.80, 0.80, 0.25)
-		new_zone.zone_shape_fill.color = Color(0.50, 0.80, 0.80, 0.10)
-		new_zone.zone_shape_polygon.polygon = zone_ref.zone_shape_polygon.polygon
-		new_zone.zone_shape_line.points = new_zone.zone_shape_polygon.polygon
-		new_zone.zone_shape_fill.polygon = new_zone.zone_shape_polygon.polygon
-
-
-
-# If not start of game, clear current loaded buttons first.
-func load_buttons():
-	if not is_just_starting:
-		for this_loi in locations_of_interest.get_children():
-			this_loi.queue_free()
-	for this_location in MapGlobal.current_map.map_lois:
-		var new_button = preload("res://UI/Map/LOIButton.tscn").instantiate()
-		var location_script = LocationsOfInterestData.load_location_of_interest(this_location[1])
-		locations_of_interest.add_child(new_button)
-		new_button.global_position = this_location[0]
-		new_button.global_position.x -= BUTTON_PLACE_OFFSET
-		new_button.global_position.y -= BUTTON_PLACE_OFFSET
-		new_button.loi_name = this_location[1]
-		new_button.icon_sprite.texture = location_script.loi_icon
-
-
-
-func load_species_areas():
-	if not is_just_starting:
-		for this_range in ranges_layer.get_children():
-			if this_range.get_class() == "Area2D":
-				this_range.queue_free()
-	for this_species in SpeciesData.get_children():
-		if MapGlobal.current_year <= this_species.species_timespan[this_species.species_timespan.size() - 1] and MapGlobal.current_year >= this_species.species_timespan[0]:
-			var range_count = 0
-			for this_range in this_species.population_ranges.get_children():
-				var new_range_area = preload("res://UI/Map/RangeAreaTemplate.tscn").instantiate()
-				ranges_layer.add_child(new_range_area)
-				new_range_area.range_shape.polygon = this_range.polygon
-				new_range_area.range_species = this_species.species_name
-				new_range_area.range_index = range_count
-				range_count += 1
 #endregion
 
 ################################################################################
@@ -502,3 +538,10 @@ func _on_resume_button_button_up():
 func _on_close_clickdrag_view_button_button_up():
 	close_clickdrag_window()
 #endregion
+
+
+func _on_back_page_button_button_up():
+	check_backwards_in_history()
+
+func _on_forward_page_button_button_up():
+	check_forwards_in_history()
